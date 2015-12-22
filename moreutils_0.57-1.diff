@@ -1,6 +1,6 @@
-diff -Naur a/debian/changelog b/debian/changelog
---- a/debian/changelog	2015-12-23 00:05:17.294399330 +0400
-+++ b/debian/changelog	2015-12-23 00:09:25.246392561 +0400
+diff -Naur debian/changelog debian/changelog
+--- debian/changelog	2015-12-23 00:31:25.286355659 +0400
++++ debian/changelog	2015-12-23 00:31:25.290355564 +0400
 @@ -1,54 +1,36 @@
 -moreutils (0.57-1) unstable; urgency=medium
 +moreutils (0.57) unstable; urgency=medium
@@ -78,9 +78,9 @@ diff -Naur a/debian/changelog b/debian/changelog
  
  moreutils (0.53) unstable; urgency=medium
  
-diff -Naur a/debian/copyright b/debian/copyright
---- a/debian/copyright	2015-12-23 00:05:17.294399330 +0400
-+++ b/debian/copyright	2015-12-23 00:09:15.994402565 +0400
+diff -Naur debian/copyright debian/copyright
+--- debian/copyright	2015-12-23 00:31:25.290355564 +0400
++++ debian/copyright	2015-12-23 00:31:25.290355564 +0400
 @@ -50,6 +50,14 @@
  Copyright: 2000, 2001, 2003, 2005, 2006 Free Software Foundation, Inc.
  License: GPL-2+
@@ -96,9 +96,9 @@ diff -Naur a/debian/copyright b/debian/copyright
  License: GPL-2
   The full text of the GPL is distributed as COPYING in moreutils's source,
   and is distributed in /usr/share/common-licenses/GPL-2 on Debian systems.
-diff -Naur a/envx.c b/envx.c
---- a/envx.c	1970-01-01 03:00:00.000000000 +0300
-+++ b/envx.c	2015-12-23 00:09:50.746398610 +0400
+diff -Naur envx.c envx.c
+--- envx.c	1970-01-01 03:00:00.000000000 +0300
++++ envx.c	2015-12-23 00:31:25.294355116 +0400
 @@ -0,0 +1,19 @@
 +#include "stdio.h"
 +int main(int argc, char *argv[])
@@ -119,9 +119,9 @@ diff -Naur a/envx.c b/envx.c
 +  }
 +  return 0;
 +} 
-diff -Naur a/lib-envx.c b/lib-envx.c
---- a/lib-envx.c	1970-01-01 03:00:00.000000000 +0300
-+++ b/lib-envx.c	2015-12-23 00:09:46.618401089 +0400
+diff -Naur lib-envx.c lib-envx.c
+--- lib-envx.c	1970-01-01 03:00:00.000000000 +0300
++++ lib-envx.c	2015-12-23 00:31:25.294355116 +0400
 @@ -0,0 +1,34 @@
 +#include "stdlib.h"
 +#include "string.h"
@@ -157,3 +157,45 @@ diff -Naur a/lib-envx.c b/lib-envx.c
 +  }
 +  return 0;
 +}
+diff -Naur Makefile Makefile
+--- Makefile	2015-12-23 00:31:25.286355659 +0400
++++ Makefile	2015-12-23 00:53:58.850296352 +0400
+@@ -1,22 +1,34 @@
+-BINS=isutf8 ifdata ifne pee sponge mispipe lckdo parallel errno
++BINS=isutf8 ifdata ifne pee sponge mispipe lckdo parallel errno envx
+ PERLSCRIPTS=vidir vipe ts combine zrun chronic
+ MANS=sponge.1 vidir.1 vipe.1 isutf8.1 ts.1 combine.1 ifdata.1 ifne.1 pee.1 zrun.1 chronic.1 mispipe.1 lckdo.1 parallel.1 errno.1
+ CFLAGS?=-O2 -g -Wall
+ INSTALL_BIN?=install -s
+ PREFIX?=/usr
++LIBDIR=/usr/local/lib
+ 
+ DOCBOOK2XMAN=xsltproc --param man.authors.section.enabled 0 /usr/share/xml/docbook/stylesheet/docbook-xsl/manpages/docbook.xsl
+ 
+-all: $(BINS) $(MANS)
++all: lib-envx.so envx $(BINS) $(MANS)
++
++lib-envx.o:
++	gcc -fPIC -c -o lib-envx.o lib-envx.c
++
++lib-envx.so: lib-envx.o
++	gcc -shared -o lib-envx.so -Wall lib-envx.o
++
++envx: envx.o lib-envx.so
++	gcc -Wall -o envx envx.o lib-envx.so
+ 
+ clean:
+-	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o
++	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o *.o *.so
+ 
+ install:
+ 	mkdir -p $(DESTDIR)$(PREFIX)/bin
+ 	$(INSTALL_BIN) $(BINS) $(DESTDIR)$(PREFIX)/bin
+ 	install $(PERLSCRIPTS) $(DESTDIR)$(PREFIX)/bin
+-	
++	install lib-envx.so $(LIBDIR)/lib-envx.so
++	ldconfig
++		
+ 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
+ 	install $(MANS) $(DESTDIR)$(PREFIX)/share/man/man1
+ 
