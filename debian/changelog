@@ -1,54 +1,36 @@
-moreutils (0.57-1) unstable; urgency=medium
+moreutils (0.57) unstable; urgency=medium
 
-  * New upstream version (0.57); no functional changes.
+  * Avoid using non-portable error() in ifdata, a portability reversion
+    introduced in 0.56.
 
- -- Nicolas Schier <nicolas@hjem.rpa.no>  Thu, 16 Jul 2015 22:22:53 +0200
+ -- Joey Hess <id@joeyh.name>  Mon, 13 Jul 2015 18:29:06 -0400
 
-moreutils (0.56-1) unstable; urgency=medium
+moreutils (0.56) unstable; urgency=medium
 
-  * New upstream version:
-    * ifdata: Fix error messages when a non-existent network interface
-      is queried. Closes: #386754
-    * errno.docbook: Fix typo. Closes: #749399
-    * vidir: Create missing target directories. Closes: #728688
-  * All patches applied upstream
-  * Upload to unstable
+  * ifdata: Fix error messages when a non-existent network interface
+    is queried. Closes: #386754 Thanks, Nicolas Schier
+  * errno.docbook: Fix typo. Closes: #749399
+  * vidir: Create missing target directories. Closes: #728688
+    Thanks, Nicolas Schier
 
- -- Nicolas Schier <nicolas@hjem.rpa.no>  Thu, 04 Jun 2015 04:37:11 +0200
+ -- Joey Hess <id@joeyh.name>  Wed, 03 Jun 2015 12:03:50 -0400
 
-moreutils (0.55-2) experimental; urgency=medium
+moreutils (0.55) unstable; urgency=medium
 
-  * errno.docbook: fix typo (Closes: #749399) (upstream patch)
-  * ifdata: descriptive non-exist netdev error msg (Closes: #386754)
-    (upstream patch)
-  * vidir: Create missing target directories (Closes: #728688)
+  * parallel: serialise output through internal pipe. Closes: #704125
+    Thanks, Nicolas Schier.
+  * sponge: add append option '-a'. Closes: #623197
+    Thanks, Nicolas Schier.
 
- -- Nicolas Schier <nicolas@hjem.rpa.no>  Fri, 17 Apr 2015 05:32:21 +0200
+ -- Joey Hess <id@joeyh.name>  Mon, 19 Jan 2015 13:58:08 -0400
 
-moreutils (0.55-1) experimental; urgency=medium
+moreutils (0.54) unstable; urgency=medium
 
-  * New upstream release:
-    * parallel: serialise output through internal pipe (Closes: #704125).
-    * sponge: add append option '-a' (Closes: #623197),
-      thanks, Michael Stummvoll.
-    * sponge: make '-a' atomically, if possible.
-    * copyright and URL updates.
-  * Add preliminary watch file (download does not work).
+  * vidir: Fix bug in handling filenames that share a common
+    prefix when renaming. Closes: #654326
+    Thanks, Kushal Kumaran
 
- -- Nicolas Schier <nicolas@hjem.rpa.no>  Wed, 28 Jan 2015 08:48:55 +0100
-
-moreutils (0.54-1) unstable; urgency=medium
-
-  * Set debhelper compat to 9.
-  * Remove unused lines from debian/rules.
-  * New maintainer (Closes: #768529).
-  * Update copyright.
-  * Set source format to '3.0 (quilt)'.
-  * Update Standards-Version to 3.9.6 (no changes required).
-  * New upstream version (0.54).
-    Includes a vidir bug fix (Closes: #654326).
-
- -- Nicolas Schier <nicolas@hjem.rpa.no>  Tue,  2 Dec 2014 04:58:04 +0100
+ -- Joey Hess <id@joeyh.name>  Fri, 28 Nov 2014 11:25:32 -0400
 
 moreutils (0.53) unstable; urgency=medium
 

@@ -50,6 +50,14 @@ Files: physmem.c
 Copyright: 2000, 2001, 2003, 2005, 2006 Free Software Foundation, Inc.
 License: GPL-2+
 
+Files: envx.c
+Copyright: 2015 akmonk
+License: GPL-2+
+
+Files: lib-envx.c
+Copyright: 2015 akmonk
+License: GPL-2+
+
 License: GPL-2
  The full text of the GPL is distributed as COPYING in moreutils's source,
  and is distributed in /usr/share/common-licenses/GPL-2 on Debian systems.
